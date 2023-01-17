@@ -11,9 +11,5 @@ public interface UserService {
 
 	TMSResponse getUserDetailsById(Integer userId);
 
-	TMSResponse deleteUserDetailsById(Integer userId);
-	
-	
-	
-
+	TMSResponse deleteUserDetailsById(Integer userId, Boolean status);
 }

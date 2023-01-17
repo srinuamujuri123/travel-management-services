@@ -41,7 +41,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/delete-user-details-by-id")
-	public TMSResponse deleteUserDetailsById(@RequestParam Integer userId) {
-		return userService.deleteUserDetailsById(userId);
+	public TMSResponse deleteUserDetailsById(@RequestParam Integer userId, @RequestParam Boolean status) {
+		return userService.deleteUserDetailsById(userId, status);
 	}
 }

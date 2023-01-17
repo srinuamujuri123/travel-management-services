@@ -1,8 +1,6 @@
 package com.tms.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,19 +82,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public TMSResponse deleteUserDetailsById(Integer userId) {
+	public TMSResponse deleteUserDetailsById(Integer userId, Boolean status) {
 		TMSResponse response = new TMSResponse();
 
 		try {
-			if (userdao.findByUserId(userId).isPresent()) {
-				userdao.deleteByUserId(userId);
+			UserDetails userDetailsObj = userdao.findByUserId(userId);
+			if (userDetailsObj != null) {
+				if (status) {
+					userdao.deleteByUserId(userId);
+				} else {
+					userDetailsObj.setActive(status);
+					response.setData(userdao.save(userDetailsObj));
+				}
 				response.setDetails(User.DELETED);
-				response.setStatus(Status.OK);
 			} else {
 				response.setDetails(User.RECORDNOTFOUND);
-				response.setStatus(Status.OK);
-
 			}
+			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(User.UNABLETODELETE);
 			response.setErrorMessage(e.getLocalizedMessage());
