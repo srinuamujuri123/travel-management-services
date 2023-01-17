@@ -83,4 +83,26 @@ public class UserServiceImpl implements UserService {
 		return response;
 	}
 
+	@Override
+	public TMSResponse deleteUserDetailsById(Integer userId) {
+		TMSResponse response = new TMSResponse();
+
+		try {
+			if (userdao.findByUserId(userId).isPresent()) {
+				userdao.deleteByUserId(userId);
+				response.setDetails(User.DELETED);
+				response.setStatus(Status.OK);
+			} else {
+				response.setDetails(User.RECORDNOTFOUND);
+				response.setStatus(Status.OK);
+
+			}
+		} catch (Exception e) {
+			response.setDetails(User.UNABLETODELETE);
+			response.setErrorMessage(e.getLocalizedMessage());
+			response.setStatus(Status.FAILED);
+		}
+		return response;
+	}
+
 }

@@ -10,6 +10,8 @@ public interface UserService {
 	TMSResponse getuserdetails(Boolean isActive);
 
 	TMSResponse getUserDetailsById(Integer userId);
+
+	TMSResponse deleteUserDetailsById(Integer userId);
 	
 	
 	

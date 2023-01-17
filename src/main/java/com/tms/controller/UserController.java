@@ -1,6 +1,7 @@
 package com.tms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +38,10 @@ public class UserController {
 	@GetMapping("/get-user-details-by-id")
 	public TMSResponse getUserDetailsById(@RequestParam Integer userId) {
 		return userService.getUserDetailsById(userId);
+	}
+
+	@DeleteMapping("/delete-user-details-by-id")
+	public TMSResponse deleteUserDetailsById(@RequestParam Integer userId) {
+		return userService.deleteUserDetailsById(userId);
 	}
 }

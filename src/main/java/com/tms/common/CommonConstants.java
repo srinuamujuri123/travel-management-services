@@ -47,6 +47,8 @@ public interface CommonConstants {
 		String ACTIVATEUSER = "User Activated successfully";
 		String MEMBER = "Member";
 		String ERROR = "Error while saving the User";
+		String DELETED = "Deleted user Details sucessfully";
+		String UNABLETODELETE = "Oops, Unable to Delete Data";
 	}
 
 }
