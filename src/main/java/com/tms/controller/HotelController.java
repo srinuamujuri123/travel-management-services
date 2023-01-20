@@ -14,30 +14,25 @@ import com.tms.model.TMSResponse;
 import com.tms.service.HotelService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/hotel")
 public class HotelController {
 	@Autowired
 	HotelService hotelService;
 
-	@GetMapping
-	public String healthCheck() {
-		return "working fine";
-	}
-
-	@PostMapping("/save-Hotel-Details")
+	@PostMapping("/save-hotel-details")
 	public TMSResponse saveHotelDetails(@RequestBody HotelDetails hotelDetails) {
 		return hotelService.saveHotelDetails(hotelDetails);
 
 	}
-	
-	@GetMapping("/get-Hotel-Details-By-Id")
-	public TMSResponse getHotelDetails(@RequestParam Integer hotelId) {
+
+	@GetMapping("/get-hotel-details-by-id")
+	public TMSResponse getHotelDetailsById(@RequestParam Integer hotelId) {
 		return hotelService.getHotelDetails(hotelId);
 	}
-	
-	@DeleteMapping("Delete=Hotel=Details=ById")
-	public TMSResponse DeleteHotelDetailsById(@RequestParam Integer hotelId, @RequestParam Boolean status) {
-		return hotelService.DeleteHotelDetailsById(hotelId, status);
+
+	@DeleteMapping("delete=hotel=details=by-id")
+	public TMSResponse deleteHotelDetailsById(@RequestParam Integer hotelId, @RequestParam(required = false) boolean status) {
+		return hotelService.deleteHotelDetailsById(hotelId, status);
 	}
 
 }

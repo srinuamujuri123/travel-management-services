@@ -50,6 +50,23 @@ public interface CommonConstants {
 		String DELETED = "Deleted user Details sucessfully";
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
 	}
+	public interface Hotel {
+
+		String SAVE = "Hotel Saved Successfully";
+		String UPDATE = "Hotel Updated Successfully";
+		String RECORDFOUND = "Hotel Found";
+		String RECORDNOTFOUND = "Hotel Not Found";
+		String LISTFOUND = "Hotel List Found";
+		String LISTNOTFOUND = "Hotel List Not Found";
+		String EMAILEXIST = "Email Already Exists";
+		String PHONEEXIST = "Phone Number Already Exists";
+		String ACTIVATEUSER = "Hotel Activated successfully";
+		String MEMBER = "Member";
+		String ERROR = "Error while saving the hotel details";
+		String DELETED = "Deleted user Details sucessfully";
+		String UNABLETODELETE = "Oops, Unable to Delete Data";
+		String HOTELEXIST ="Hotel name existing already";
+	}
 	
 
 }

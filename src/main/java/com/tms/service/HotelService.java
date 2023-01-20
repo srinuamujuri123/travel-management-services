@@ -9,7 +9,7 @@ public interface HotelService {
 
 	TMSResponse getHotelDetails(Integer id);
 
-	TMSResponse DeleteHotelDetailsById(Integer hotelId, Boolean status);
+	TMSResponse deleteHotelDetailsById(Integer hotelId, boolean status);
 
 
 

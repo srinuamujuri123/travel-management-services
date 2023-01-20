@@ -1,10 +1,9 @@
 package com.tms.service.impl;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tms.common.CommonConstants.Hotel;
 import com.tms.common.CommonConstants.User;
 import com.tms.dao.HotelDao;
 import com.tms.model.HotelDetails;
@@ -22,22 +21,19 @@ public class HotelServiceImpl implements HotelService {
 	public TMSResponse saveHotelDetails(HotelDetails hotelDetails) {
 		TMSResponse response = new TMSResponse();
 		try {
-			HotelDetails hotelNameObj = hotelDao.findByHotelName(hotelDetails.getHotelName());
-			HotelDetails hotelContactObj = hotelDao.findByHotelContact(hotelDetails.getHotelContact());
-			// HotelDetails hotelCityNameObj=
-			// hotelDao.findByCityName(hotelDetails.getCityName());
-			if (hotelNameObj == null && hotelContactObj == null) {
+			HotelDetails hotelNameObjFromDb = hotelDao.findByHotelName(hotelDetails.getHotelName());
+			boolean isHotelExist = (hotelNameObjFromDb != null) && (hotelNameObjFromDb.getCityName() != null)
+					&& (hotelNameObjFromDb.getCityName().equalsIgnoreCase(hotelDetails.getCityName()));
+			if (isHotelExist) {
+				response.setDetails(Hotel.HOTELEXIST);
+			} else {
 				hotelDetails.setActive(true);
 				response.setData(hotelDao.save(hotelDetails));
-				response.setDetails(User.SAVE);
-			} else if (hotelNameObj != null) {
-				response.setDetails("hotel name existing");
-			} else if (hotelContactObj != null) {
-				response.setDetails("hotel contact existing");
+				response.setDetails(Hotel.SAVE);
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
-			response.setDetails("Oops, Unable to save data.");
+			response.setDetails(Hotel.ERROR);
 			response.setErrorMessage(e.getLocalizedMessage());
 			response.setStatus(Status.FAILED);
 		}
@@ -45,14 +41,14 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public TMSResponse getHotelDetails(Integer Id) {
+	public TMSResponse getHotelDetails(Integer hotelId) {
 		TMSResponse response = new TMSResponse();
 		try {
-			Optional<HotelDetails> hotelDetailsById = hotelDao.findByHotelId(Id);
-			if (hotelDetailsById.isPresent()) {
-				response.setData(hotelDetailsById.get());
+			HotelDetails hotelDetailsById = hotelDao.findByHotelId(hotelId);
+			if (hotelDetailsById != null) { // isPresent() and .get are optional method.
+				response.setData(hotelDetailsById);
 			} else {
-				response.setData("Oops no data found for " + Id);
+				response.setData("Oops no data found for " + hotelId);
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
@@ -64,32 +60,27 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public TMSResponse DeleteHotelDetailsById(Integer Id, Boolean status) {
+	public TMSResponse deleteHotelDetailsById(Integer hotelId, boolean status) {
 		TMSResponse response = new TMSResponse();
 		try {
-			HotelDetails deleteHotelDetailsById = hotelDao.findById(Id); // Optional<HotelDetails>
+			HotelDetails deleteHotelDetailsById = hotelDao.findByHotelId(hotelId); // Optional<HotelDetails>
 			if (deleteHotelDetailsById != null) {
 				if (status) {
-					hotelDao.deleteByHotelId(Id);
-
+					hotelDao.deleteByHotelId(hotelId);
 				} else {
 					deleteHotelDetailsById.setActive(status);
 					response.setData(hotelDao.save(deleteHotelDetailsById));
 				}
-				response.setDetails(User.DELETED);
+				response.setDetails(Hotel.DELETED);
 			} else {
-				response.setDetails(User.RECORDNOTFOUND);
+				response.setDetails(Hotel.RECORDNOTFOUND);
 			}
 			response.setStatus(Status.OK);
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			response.setDetails(User.UNABLETODELETE);
 			response.setErrorMessage(e.getLocalizedMessage());
 			response.setStatus(Status.FAILED);
 		}
-
 		return response;
 	}
-
 }
