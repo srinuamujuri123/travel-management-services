@@ -50,5 +50,6 @@ public interface CommonConstants {
 		String DELETED = "Deleted user Details sucessfully";
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
 	}
+	
 
 }
