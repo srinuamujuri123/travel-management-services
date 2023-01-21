@@ -30,7 +30,7 @@ public class HotelController {
 		return hotelService.getHotelDetails(hotelId);
 	}
 
-	@DeleteMapping("delete=hotel=details=by-id")
+	@DeleteMapping("delete-hotel-details-by-id")
 	public TMSResponse deleteHotelDetailsById(@RequestParam Integer hotelId, @RequestParam(required = false) boolean status) {
 		return hotelService.deleteHotelDetailsById(hotelId, status);
 	}

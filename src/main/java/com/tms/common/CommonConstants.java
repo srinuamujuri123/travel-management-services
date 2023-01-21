@@ -1,7 +1,7 @@
 package com.tms.common;
 
 public interface CommonConstants {
-	
+
 	public interface ResponseStatus {
 		String SUCCESS = "Success";
 		String FAIL = "Fail";
@@ -50,9 +50,10 @@ public interface CommonConstants {
 		String DELETED = "Deleted user Details sucessfully";
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
 	}
+
 	public interface Hotel {
 
-		String SAVE = "Hotel Saved Successfully";
+		String SAVE = "Hotel Data Saved Successfully";
 		String UPDATE = "Hotel Updated Successfully";
 		String RECORDFOUND = "Hotel Found";
 		String RECORDNOTFOUND = "Hotel Not Found";
@@ -65,8 +66,19 @@ public interface CommonConstants {
 		String ERROR = "Error while saving the hotel details";
 		String DELETED = "Deleted user Details sucessfully";
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
-		String HOTELEXIST ="Hotel name existing already";
+		String HOTELEXIST = "Hotel name existing already";
 	}
-	
+
+	public interface City {
+		String SAVE = "City name saved successfully";
+		String UPDATE = "City name Updated Successfully";
+		String ACTIVATEUSER = "City Activated successfully";
+		String MEMBER = "Member";
+		String ERROR = "Error while saving the City details";
+		String DELETED = "Deleted City Details sucessfully";
+		String UNABLETODELETE = "Oops, Unable to Delete City";
+		String CITYEXIST = "City name existing already";
+		String CITYNOTEXIST = "CIty name not existing";
+	}
 
 }
