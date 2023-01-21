@@ -30,9 +30,9 @@ public class CityController {
 	}
 
 	@DeleteMapping("/delete-city-details-by-id")
-	public TMSResponse deleteCityDetailsById(@RequestBody CityDetails cityDetails, @RequestParam Integer cityId,
-			@RequestParam(required = false) boolean status) {
-		return cityService.deleteCityDetailsById(cityId, status);
+	public TMSResponse deleteCityDetailsById(@RequestParam Integer cityId,
+			@RequestParam(required = false) Boolean isActive) {
+		return cityService.deleteCityDetailsById(cityId, isActive);
 	}
 
 }

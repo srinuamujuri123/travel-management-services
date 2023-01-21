@@ -15,6 +15,11 @@ public class CityDetails {
 	String cityName;
 	boolean isActive;
 
+	@Override
+	public String toString() {
+		return "CityDetails [cityId=" + cityId + ", cityName=" + cityName + ", isActive=" + isActive + "]";
+	}
+
 	public Integer getCityId() {
 		return cityId;
 	}
