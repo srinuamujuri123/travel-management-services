@@ -18,4 +18,6 @@ public interface HotelDao extends JpaRepository<HotelDetails, Integer> {
 
 	HotelDetails findByCityName(String cityName);
 
+	HotelDetails findByHotelNameAndCityName(String hotelName, String cityName);
+
 }
