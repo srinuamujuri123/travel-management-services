@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 package com.tms.service.impl;
 
 import static com.tms.utils.TMSUtils.ZERO;
@@ -18,10 +14,7 @@ import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserBookingDetails;
 import com.tms.service.UserBookingService;
-<<<<<<< HEAD
 
-=======
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 @Service
 public class UserBookingServiceImpl implements UserBookingService {
 
@@ -29,11 +22,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 	UserBookingDao userBookingDao;
 	@Autowired
 	HotelDao hotelDao;
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 	static Logger logger = LoggerFactory.getLogger(UserBookingServiceImpl.class);
 
 	@Override
@@ -43,12 +32,8 @@ public class UserBookingServiceImpl implements UserBookingService {
 		try {
 			String cityName = userBookingDetails.getCityName();
 			String hotelName = userBookingDetails.getHotelName();
-<<<<<<< HEAD
 			Integer userRequestedRooms = userBookingDetails.getNoOfRoom() == null ? ZERO
 					: userBookingDetails.getNoOfRoom();
-=======
-			Integer userRequestedRooms = userBookingDetails.getNoOfRoom() == null ? ZERO : userBookingDetails.getNoOfRoom();
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 
 			if (ZERO == userRequestedRooms) {
 				response.setDetails("Oops! Looks you have selected 0 rooms");
@@ -57,36 +42,23 @@ public class UserBookingServiceImpl implements UserBookingService {
 			}
 
 			HotelDetails hotelNameObjFromDb = hotelDao.findByHotelNameAndCityName(hotelName, cityName);
-<<<<<<< HEAD
-
-=======
-			
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 			int roomsAvailable = hotelNameObjFromDb.getRoomsAvailable();
+			int remainingAvaibleRoomsToSave = roomsAvailable - userRequestedRooms;
 			if (roomsAvailable > ZERO && roomsAvailable >= userRequestedRooms) {
 				userBookingDetails.setActive(Boolean.TRUE);
 				response.setData(userBookingDao.save(userBookingDetails));
-				int remainingAvaibleRoomsToSave = roomsAvailable - userRequestedRooms;
 				hotelNameObjFromDb.setRoomsAvailable(remainingAvaibleRoomsToSave);
 				hotelDao.save(hotelNameObjFromDb);
-<<<<<<< HEAD
-				response.setDetails("Booking succesful, you have booked " + userRequestedRooms +" rooms.");
+				response.setDetails("Booking succesful, you have booked " + userRequestedRooms + " rooms.");
 			} else {
 				if (roomsAvailable < userRequestedRooms) {
 					response.setDetails("Oops, available rooms are " + roomsAvailable);
 				} else {
 					logger.warn("Oops, selected more rooms than available");
-=======
-				response.setDetails("Booking succesful and remaining rooms are" +  remainingAvaibleRoomsToSave);
-			} else {
-				if (roomsAvailable < userRequestedRooms) {
-					response.setDetails("Oops, available rooms are " + roomsAvailable);
-				}else {
-					logger.warn("Something went");
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
+					response.setDetails("Booking succesful and remaining rooms are" + remainingAvaibleRoomsToSave);
 				}
+				response.setStatus(Status.OK);
 			}
-			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, unable to save data");
 			String errorMessage = e.getLocalizedMessage();
@@ -98,7 +70,6 @@ public class UserBookingServiceImpl implements UserBookingService {
 		return response;
 	}
 
-<<<<<<< HEAD
 	@Override
 	public TMSResponse getUserBookingDetailsByBookingId(Integer userBookingId) {
 		TMSResponse response = new TMSResponse();
@@ -134,7 +105,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			} else {
 				userBookingDetailsDb.setActive(Boolean.FALSE);
 				UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
-				
+
 				response.setData(updatedUserBookingDetails);
 				response.setDetails("Rooms Cancelled successfully");
 			}
@@ -148,6 +119,3 @@ public class UserBookingServiceImpl implements UserBookingService {
 	}
 
 }
-=======
-}
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd

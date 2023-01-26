@@ -8,11 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CityDetails")
-<<<<<<< HEAD
 public class CityDetails extends BaseEntity {
-=======
-public class CityDetails extends BaseEntity{
->>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer cityId;
@@ -34,11 +30,6 @@ public class CityDetails extends BaseEntity{
 		this.cityName = cityName;
 	}
 
-	@Override
-	public String toString() {
-		return "CityDetails [cityId=" + cityId + ", cityName=" + cityName + "]";
-	}
-	
 	@Override
 	public String toString() {
 		return "CityDetails [cityId=" + cityId + ", cityName=" + cityName + "]";
