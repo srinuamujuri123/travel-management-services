@@ -1,7 +1,10 @@
 package com.tms.model;
 
+<<<<<<< HEAD
 import java.util.Date;
 
+=======
+>>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +14,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "UserBookingDetails")
 public class UserBookingDetails extends BaseEntity {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer userBookingId;
@@ -19,8 +25,19 @@ public class UserBookingDetails extends BaseEntity {
 	String cityName;
 	String hotelName;
 	Integer noOfRoom;
+<<<<<<< HEAD
 	Date fromDate;
 	Date toDate;
+=======
+
+	public String getHotelName() {
+		return hotelName;
+	}
+
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
+	}
+>>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 
 	public Integer getUserBookingId() {
 		return userBookingId;
@@ -46,6 +63,7 @@ public class UserBookingDetails extends BaseEntity {
 		this.cityName = cityName;
 	}
 
+<<<<<<< HEAD
 	public String getHotelName() {
 		return hotelName;
 	}
@@ -54,6 +72,8 @@ public class UserBookingDetails extends BaseEntity {
 		this.hotelName = hotelName;
 	}
 
+=======
+>>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 	public Integer getNoOfRoom() {
 		return noOfRoom;
 	}
@@ -62,6 +82,7 @@ public class UserBookingDetails extends BaseEntity {
 		this.noOfRoom = noOfRoom;
 	}
 
+<<<<<<< HEAD
 	public Date getFromDate() {
 		return fromDate;
 	}
@@ -78,4 +99,6 @@ public class UserBookingDetails extends BaseEntity {
 		this.toDate = toDate;
 	}
 
+=======
+>>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 }

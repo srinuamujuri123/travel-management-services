@@ -1,5 +1,7 @@
 package com.tms.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +10,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TravelUserDetails")
+<<<<<<< HEAD
 public class UserDetails extends BaseEntity {
+=======
+public class UserDetails extends BaseEntity{
+>>>>>>> 78df98457f45ae270b01f8b64bac7067018ce2fd
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer userId;
