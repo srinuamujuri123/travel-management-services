@@ -20,4 +20,6 @@ public interface UserDao extends JpaRepository<UserDetails, Integer> {
 
 	void deleteByUserId(Integer userId);
 
+	List<UserDetails> findAllByUserMailIdContains(String search);
+
 }

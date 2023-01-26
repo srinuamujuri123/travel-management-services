@@ -7,7 +7,7 @@ public interface UserService {
 
 	TMSResponse saveUserDetails(UserDetails userDetails);
 
-	TMSResponse getuserdetails(Boolean isActive);
+	TMSResponse getuserdetails(Boolean isActive, String search);
 
 	TMSResponse getUserDetailsById(Integer userId);
 

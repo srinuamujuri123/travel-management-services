@@ -1,8 +1,11 @@
 package com.tms.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,13 +49,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public TMSResponse getuserdetails(Boolean isActive) {
+	public TMSResponse getuserdetails(Boolean isActive, String search) {
 
 		TMSResponse response = new TMSResponse();
+		List<UserDetails> userDetailsList = new ArrayList<>();
 		try {
-			List<UserDetails> userDetailsList = userdao.findAllByIsActive(isActive);
-			response.setData(userDetailsList);
-			response.setCount(userDetailsList.size());
+			// if (StringUtils.isNotEmpty(search)) {
+			if (search != null || !search.isEmpty()) {
+				userDetailsList = userdao.findAllByUserMailIdContains(search);
+			} else {
+				userDetailsList = userdao.findAllByIsActive(isActive);
+			}
+
+			// if (CollectionUtils.isNotEmpty(userDetailsList)) {
+			if (userDetailsList != null || userDetailsList.size() > 0) {
+				response.setData(userDetailsList);
+				response.setCount(userDetailsList.size());
+			} else {
+				//if (userDetailsList == null || userDetailsList.size() == 0) {
+
+				response.setDetails(User.LISTNOTFOUND);
+			}
+
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, unable to fetch data");
