@@ -66,7 +66,8 @@ public class CityServiceImpl implements CityService {
 		try {
 			CityDetails cityDetailsByIdobj = cityDao.findByCityId(cityId);
 			if (cityDetailsByIdobj != null) {
-				isActive = isActive == null ? false : isActive;	//if isActive is null then make it as false else take it as isActive 
+				isActive = isActive == null ? false : isActive; // if isActive is null then make it as false else take
+																// it as isActive
 				if (isActive) {
 					cityDao.deleteByCityId(cityId);
 				} else {

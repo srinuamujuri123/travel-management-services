@@ -8,25 +8,16 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TravelUserDetails")
-public class UserDetails {
+public class UserDetails extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer userId;
 	String userName;
 	String userMailId;
 	long userMobileNo;
-	boolean isActive;
 
 	public Integer getUserId() {
 		return userId;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 
 	public void setUserId(Integer userId) {

@@ -8,17 +8,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CityDetails")
-public class CityDetails {
+public class CityDetails extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer cityId;
 	String cityName;
-	boolean isActive;
-
-	@Override
-	public String toString() {
-		return "CityDetails [cityId=" + cityId + ", cityName=" + cityName + ", isActive=" + isActive + "]";
-	}
 
 	public Integer getCityId() {
 		return cityId;
@@ -43,5 +37,11 @@ public class CityDetails {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+	
+	@Override
+	public String toString() {
+		return "CityDetails [cityId=" + cityId + ", cityName=" + cityName + "]";
+	}
+
 
 }

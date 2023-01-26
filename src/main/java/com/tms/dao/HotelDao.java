@@ -13,9 +13,11 @@ public interface HotelDao extends JpaRepository<HotelDetails, Integer> {
 	HotelDetails findByHotelContact(Integer hotelContact);
 
 	HotelDetails findByHotelId(Integer Id);
-	
-	HotelDetails deleteByHotelId(Integer hotelId);
+
+	void deleteByHotelId(Integer hotelId);
 
 	HotelDetails findByCityName(String cityName);
+
+	HotelDetails findByHotelNameAndCityName(String hotelName, String cityName);
 
 }

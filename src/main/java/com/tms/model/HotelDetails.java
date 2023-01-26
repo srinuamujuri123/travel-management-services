@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "HotelDetails")
-public class HotelDetails {
+public class HotelDetails extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer hotelId;
@@ -17,7 +17,7 @@ public class HotelDetails {
 	String hotelAddress;
 	Integer hotelContact;
 	String cityName;
-	boolean isActive;
+	Integer roomsAvailable;
 	public Integer getHotelId() {
 		return hotelId;
 	}
@@ -54,11 +54,11 @@ public class HotelDetails {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-	public boolean isActive() {
-		return isActive;
+	public Integer getRoomsAvailable() {
+		return roomsAvailable;
 	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setRoomsAvailable(Integer roomsAvailable) {
+		this.roomsAvailable = roomsAvailable;
 	}
 
 	
