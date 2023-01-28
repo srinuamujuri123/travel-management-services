@@ -9,9 +9,11 @@ import com.tms.model.CityDetails;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.service.CityService;
+import com.tms.utils.DateUtils;
 
 @Service
 public class CityServiceImpl implements CityService {
+	
 	@Autowired
 	CityDao cityDao;
 
@@ -23,11 +25,12 @@ public class CityServiceImpl implements CityService {
 			return response;
 		}
 		try {
-			CityDetails cityNameObj = cityDao.findByCityName(cityDetails.getCityName());
-			if (cityNameObj != null && cityNameObj.getCityName() != null && cityDetails.getCityName() != null
-					&& cityNameObj.getCityName().equalsIgnoreCase(cityDetails.getCityName())) {
+			CityDetails cityNameDBObj = cityDao.findByCityNameIgnoreCase(cityDetails.getCityName());
+			if (cityNameDBObj != null) {
 				response.setDetails(City.CITYEXIST);
 			} else {
+				cityDetails.setCreatedOn(DateUtils.getTodayDate());
+				cityDetails.setUpdatedOn(DateUtils.getTodayDate());
 				cityDetails.setActive(true);
 				response.setData(cityDao.save(cityDetails));
 				response.setDetails(City.SAVE);
@@ -85,6 +88,13 @@ public class CityServiceImpl implements CityService {
 			response.setErrorMessage(e.getLocalizedMessage());
 			response.setStatus(Status.FAILED);
 		}
+		return response;
+	}
+
+	@Override
+	public TMSResponse getCityDetails(Boolean isActive) {
+		TMSResponse response = new TMSResponse();
+		response.setData(cityDao.findAllByIsActiveOrderByUpdatedOnDesc(isActive));
 		return response;
 	}
 }

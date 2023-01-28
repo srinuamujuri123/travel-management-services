@@ -11,4 +11,6 @@ public interface CityService {
 
 	TMSResponse deleteCityDetailsById(Integer cityId, Boolean status);
 
+	TMSResponse getCityDetails(Boolean isActive);
+
 }

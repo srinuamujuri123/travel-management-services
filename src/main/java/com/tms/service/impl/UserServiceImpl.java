@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 				response.setData(userDetailsList);
 				response.setCount(userDetailsList.size());
 			} else {
-				//if (userDetailsList == null || userDetailsList.size() == 0) {
+				// if (userDetailsList == null || userDetailsList.size() == 0) {
 
 				response.setDetails(User.LISTNOTFOUND);
 			}
