@@ -67,6 +67,7 @@ public interface CommonConstants {
 		String DELETED = "Deleted user Details sucessfully";
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
 		String HOTELEXIST = "Hotel name existing already";
+		String UNABLETOFETCHDATA = "Oops, unable to fetch Data, try after some time.";
 	}
 
 	public interface City {
@@ -79,6 +80,8 @@ public interface CommonConstants {
 		String UNABLETODELETE = "Oops, Unable to Delete City";
 		String CITYEXIST = "City name existing already";
 		String CITYNOTEXIST = "CIty name not existing";
+		String LISTNOTFOUND = "City List Not Found";
+		String LISTFOUND = "City List Found";
 	}
 
 }

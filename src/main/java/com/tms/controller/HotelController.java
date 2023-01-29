@@ -24,6 +24,11 @@ public class HotelController {
 		return hotelService.saveHotelDetails(hotelDetails);
 
 	}
+	
+	@GetMapping("/get-hotel-details")
+	public TMSResponse getHotelDetails(@RequestParam Boolean isActive, @RequestParam String search) {
+		return hotelService.getHotelDetails(isActive, search);
+	}
 
 	@GetMapping("/get-hotel-details-by-id")
 	public TMSResponse getHotelDetailsById(@RequestParam Integer hotelId) {

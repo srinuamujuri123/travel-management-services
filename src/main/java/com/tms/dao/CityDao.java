@@ -18,6 +18,8 @@ public interface CityDao extends JpaRepository<CityDetails, Integer> {
 
 	CityDetails findByCityNameIgnoreCase(String cityName);
 
-	List<CityDetails> findAllByIsActiveOrderByUpdatedOnDesc(Boolean isActive);
+	List<CityDetails> findAllByIsActiveAndCityNameContaining(Boolean isActive, String cityName);
+
+	List<CityDetails> findAllByIsActive(Boolean isActive);
 
 }

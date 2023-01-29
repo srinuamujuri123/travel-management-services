@@ -1,5 +1,10 @@
 package com.tms.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +18,7 @@ import com.tms.utils.DateUtils;
 
 @Service
 public class CityServiceImpl implements CityService {
-	
+
 	@Autowired
 	CityDao cityDao;
 
@@ -75,6 +80,8 @@ public class CityServiceImpl implements CityService {
 					cityDao.deleteByCityId(cityId);
 				} else {
 					cityDetailsByIdobj.setActive(isActive);
+					cityDetailsByIdobj.setCreatedOn(DateUtils.getTodayDate());
+					cityDetailsByIdobj.setUpdatedOn(DateUtils.getTodayDate());
 					response.setData(cityDao.save(cityDetailsByIdobj));
 				}
 
@@ -92,9 +99,28 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public TMSResponse getCityDetails(Boolean isActive) {
+	public TMSResponse getCityDetails(Boolean isActive, String search) {
 		TMSResponse response = new TMSResponse();
-		response.setData(cityDao.findAllByIsActiveOrderByUpdatedOnDesc(isActive));
+		List<CityDetails> cityDetailsList = new ArrayList();
+		try {
+			if (StringUtils.isNotEmpty(search)) {
+				cityDetailsList = cityDao.findAllByIsActiveAndCityNameContaining(isActive, search);
+			} else {
+				cityDetailsList = cityDao.findAllByIsActive(isActive);
+			}
+
+			if (CollectionUtils.isNotEmpty(cityDetailsList)) {
+				response.setData(cityDetailsList);
+				response.setCount(cityDetailsList.size());
+			} else {
+				response.setDetails(City.LISTNOTFOUND);
+			}
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDetails(City.CITYNOTEXIST);
+			response.setErrorMessage(e.getLocalizedMessage());
+			response.setStatus(Status.FAILED);
+		}
 		return response;
 	}
 }
