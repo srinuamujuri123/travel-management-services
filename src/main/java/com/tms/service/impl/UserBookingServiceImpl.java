@@ -2,11 +2,17 @@ package com.tms.service.impl;
 
 import static com.tms.utils.TMSUtils.ZERO;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tms.common.CommonConstants.Hotel;
 import com.tms.dao.HotelDao;
 import com.tms.dao.UserBookingDao;
 import com.tms.model.HotelDetails;
@@ -112,6 +118,31 @@ public class UserBookingServiceImpl implements UserBookingService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to cancel rooms, please try after some time.");
+			response.setErrorMessage(e.getLocalizedMessage());
+			response.setStatus(Status.FAILED);
+		}
+		return response;
+	}
+
+	@Override
+	public TMSResponse getUserBookingDetails(Boolean isActive, String search) {
+		TMSResponse response = new TMSResponse();
+		List<UserBookingDetails> userBookingDetailsList = new ArrayList<UserBookingDetails>();
+		try {
+			if (StringUtils.isNotEmpty(search)) {
+				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search);
+			} else {
+				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive);
+			}
+			if (CollectionUtils.isNotEmpty(userBookingDetailsList)) {
+				response.setData(userBookingDetailsList);
+				response.setCount(userBookingDetailsList.size());
+			} else {
+				response.setDetails(Hotel.LISTNOTFOUND);
+			}
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDetails(Hotel.UNABLETOFETCHDATA);
 			response.setErrorMessage(e.getLocalizedMessage());
 			response.setStatus(Status.FAILED);
 		}

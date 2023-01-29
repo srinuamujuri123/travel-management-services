@@ -9,8 +9,8 @@ public interface CityService {
 
 	TMSResponse getCityDetailsById(Integer cityId);
 
-	TMSResponse deleteCityDetailsById(Integer cityId, Boolean status);
+	TMSResponse getCityDetails(Boolean isActive, String search);
 
-	TMSResponse getCityDetails(Boolean isActive);
+	TMSResponse deleteCityDetailsById(Integer cityId, Boolean status);
 
 }

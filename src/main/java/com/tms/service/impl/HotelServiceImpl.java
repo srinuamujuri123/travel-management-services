@@ -1,11 +1,17 @@
 package com.tms.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tms.common.CommonConstants.Hotel;
 import com.tms.common.CommonConstants.User;
 import com.tms.dao.HotelDao;
+import com.tms.dao.UserDao;
 import com.tms.model.HotelDetails;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
@@ -57,6 +63,38 @@ public class HotelServiceImpl implements HotelService {
 			response.setStatus(Status.FAILED);
 		}
 		return response;
+	}
+
+	@Override
+	public TMSResponse getHotelDetails(Boolean isActive, String search) {
+		TMSResponse response = new TMSResponse();
+		List<HotelDetails> hotelDetailsList = new ArrayList<HotelDetails>();
+		try {
+			if (StringUtils.isNotEmpty(search)) {
+				// if(search != null || !search.isEmpty()) {
+				hotelDetailsList = hotelDao.findAllByIsActiveAndHotelNameContaining(isActive, search);
+			} else {
+				hotelDetailsList = hotelDao.findAllByIsActive(isActive);
+			}
+			if (CollectionUtils.isNotEmpty(hotelDetailsList)) {
+				// if(hotelDetailsList != null || hotelDetailsList.size() >0) {
+				response.setData(hotelDetailsList);
+				response.setCount(hotelDetailsList.size());
+			} else {
+				response.setDetails(Hotel.LISTNOTFOUND);
+			}
+			// return response.setStatus(Status.OK);
+			response.setStatus(Status.OK);
+			return response;
+
+		} catch (Exception e) {
+			response.setDetails("Oops, Unable to fetch Data");
+			response.setErrorMessage(e.getLocalizedMessage());
+			response.setStatus(Status.FAILED);
+		}
+
+		return response;
+
 	}
 
 	@Override

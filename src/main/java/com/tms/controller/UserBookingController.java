@@ -30,9 +30,14 @@ public class UserBookingController {
 
 	}
 
+	@GetMapping("get-user-booking-details")
+	public TMSResponse getUserBookingDetails(@RequestParam Boolean isActive, @RequestParam String search) {
+		return userBookingService.getUserBookingDetails(isActive, search);
+	}
+
 	@RequestMapping("delete-Booking-Details-By-Booking-Id")
 	public TMSResponse deleteBookingDetailsByBookingId(@RequestParam Integer userBookingId) {
 		return userBookingService.deleteBookingDetailsByBookingId(userBookingId);
 	}
-	
+
 }

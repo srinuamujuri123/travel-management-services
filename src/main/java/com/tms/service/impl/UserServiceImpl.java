@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			// if (StringUtils.isNotEmpty(search)) {
 			if (search != null || !search.isEmpty()) {
-				userDetailsList = userdao.findAllByUserMailIdContains(search);
+				userDetailsList = userdao.findAllByIsActiveAndUserMailIdContains(isActive, search);
 			} else {
 				userDetailsList = userdao.findAllByIsActive(isActive);
 			}
