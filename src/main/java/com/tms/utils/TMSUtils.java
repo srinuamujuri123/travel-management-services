@@ -19,4 +19,9 @@ public class TMSUtils {
 		}
 		return null;
 	}
+
+	public static String getExceptionDetails(Exception e) {
+		String errorMessage = TMSUtils.getSQLException(e);
+		return (errorMessage == null) ? e.getLocalizedMessage() : errorMessage;
+	}
 }

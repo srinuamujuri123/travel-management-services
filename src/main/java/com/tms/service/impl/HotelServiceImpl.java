@@ -43,9 +43,7 @@ public class HotelServiceImpl implements HotelService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 
-			String errorMsg = TMSUtils.getSQLException(e);
-			errorMsg = (errorMsg == null) ? e.getLocalizedMessage() : errorMsg;
-			response.setErrorMessage(errorMsg);
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setDetails(Hotel.ERROR);
 			response.setStatus(Status.FAILED);
 		}
@@ -65,7 +63,7 @@ public class HotelServiceImpl implements HotelService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to fetch Data, please try after some time.");
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -95,7 +93,7 @@ public class HotelServiceImpl implements HotelService {
 
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to fetch Data");
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 
@@ -123,7 +121,7 @@ public class HotelServiceImpl implements HotelService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(User.UNABLETODELETE);
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;

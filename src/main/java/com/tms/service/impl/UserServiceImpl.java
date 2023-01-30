@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +13,7 @@ import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserDetails;
 import com.tms.service.UserService;
+import com.tms.utils.TMSUtils;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, unable to save data");
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, unable to fetch data");
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to fetch data, please try after sometime");
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -119,7 +118,7 @@ public class UserServiceImpl implements UserService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(User.UNABLETODELETE);
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;

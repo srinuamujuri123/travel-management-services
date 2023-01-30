@@ -20,6 +20,7 @@ import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserBookingDetails;
 import com.tms.service.UserBookingService;
+import com.tms.utils.TMSUtils;
 
 @Service
 public class UserBookingServiceImpl implements UserBookingService {
@@ -67,7 +68,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			}
 		} catch (Exception e) {
 			response.setDetails("Oops, unable to save data");
-			String errorMessage = e.getLocalizedMessage();
+			String errorMessage = TMSUtils.getExceptionDetails(e);
 			response.setErrorMessage(errorMessage);
 			logger.error(errorMessage);
 			response.setStatus(Status.FAILED);
@@ -93,7 +94,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			}
 		} catch (Exception e) {
 			response.setDetails("Oops unable to fetch data, try after some time.");
-			response.setErrorMessage(e.getLocalizedMessage());
+			String errorMessage = TMSUtils.getExceptionDetails(e);
 			response.setStatus(Status.FAILED);
 			e.printStackTrace();
 		}
@@ -118,7 +119,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to cancel rooms, please try after some time.");
-			response.setErrorMessage(e.getLocalizedMessage());
+			String errorMessage = TMSUtils.getExceptionDetails(e);
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -143,7 +144,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(Hotel.UNABLETOFETCHDATA);
-			response.setErrorMessage(e.getLocalizedMessage());
+			String errorMessage = TMSUtils.getExceptionDetails(e);
 			response.setStatus(Status.FAILED);
 		}
 		return response;
