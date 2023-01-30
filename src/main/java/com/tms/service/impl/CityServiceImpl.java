@@ -44,9 +44,7 @@ public class CityServiceImpl implements CityService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(City.ERROR);
-			String errorMsg = TMSUtils.getSQLException(e);
-			errorMsg = (errorMsg == null) ? e.getLocalizedMessage() : errorMsg;
-			response.setErrorMessage(errorMsg);
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -65,7 +63,7 @@ public class CityServiceImpl implements CityService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to fetch Data, try after some time.");
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -94,7 +92,7 @@ public class CityServiceImpl implements CityService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(City.UNABLETODELETE);
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -120,7 +118,7 @@ public class CityServiceImpl implements CityService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(City.CITYNOTEXIST);
-			response.setErrorMessage(e.getLocalizedMessage());
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;
