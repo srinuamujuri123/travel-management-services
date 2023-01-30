@@ -15,6 +15,7 @@ import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.service.CityService;
 import com.tms.utils.DateUtils;
+import com.tms.utils.TMSUtils;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -43,7 +44,9 @@ public class CityServiceImpl implements CityService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(City.ERROR);
-			response.setErrorMessage(e.getLocalizedMessage());
+			String errorMsg = TMSUtils.getSQLException(e);
+			errorMsg = (errorMsg == null) ? e.getLocalizedMessage() : errorMsg;
+			response.setErrorMessage(errorMsg);
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -80,7 +83,6 @@ public class CityServiceImpl implements CityService {
 					cityDao.deleteByCityId(cityId);
 				} else {
 					cityDetailsByIdobj.setActive(isActive);
-					cityDetailsByIdobj.setCreatedOn(DateUtils.getTodayDate());
 					cityDetailsByIdobj.setUpdatedOn(DateUtils.getTodayDate());
 					response.setData(cityDao.save(cityDetailsByIdobj));
 				}

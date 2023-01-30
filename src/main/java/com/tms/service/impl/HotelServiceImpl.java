@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 import com.tms.common.CommonConstants.Hotel;
 import com.tms.common.CommonConstants.User;
 import com.tms.dao.HotelDao;
-import com.tms.dao.UserDao;
 import com.tms.model.HotelDetails;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.service.HotelService;
+import com.tms.utils.DateUtils;
+import com.tms.utils.TMSUtils;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -33,14 +34,19 @@ public class HotelServiceImpl implements HotelService {
 			if (isHotelExist) {
 				response.setDetails(Hotel.HOTELEXIST);
 			} else {
+				hotelDetails.setCreatedOn(DateUtils.getTodayDate());
+				hotelDetails.setUpdatedOn(DateUtils.getTodayDate());
 				hotelDetails.setActive(true);
 				response.setData(hotelDao.save(hotelDetails));
 				response.setDetails(Hotel.SAVE);
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
+
+			String errorMsg = TMSUtils.getSQLException(e);
+			errorMsg = (errorMsg == null) ? e.getLocalizedMessage() : errorMsg;
+			response.setErrorMessage(errorMsg);
 			response.setDetails(Hotel.ERROR);
-			response.setErrorMessage(e.getLocalizedMessage());
 			response.setStatus(Status.FAILED);
 		}
 		return response;
@@ -106,6 +112,7 @@ public class HotelServiceImpl implements HotelService {
 				if (status) {
 					hotelDao.deleteByHotelId(hotelId);
 				} else {
+					deleteHotelDetailsById.setUpdatedOn(DateUtils.getTodayDate());
 					deleteHotelDetailsById.setActive(status);
 					response.setData(hotelDao.save(deleteHotelDetailsById));
 				}
