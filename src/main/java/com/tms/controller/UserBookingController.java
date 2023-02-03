@@ -20,8 +20,8 @@ public class UserBookingController {
 	UserBookingService userBookingService;
 
 	@PostMapping("save-user-booking")
-	public TMSResponse saveUserBooking(@RequestBody UserBookingDetails userBookingDetails) {
-		return userBookingService.saveUserBooking(userBookingDetails);
+	public TMSResponse saveUserBooking(@RequestBody UserBookingDetails userBookingDetails, @RequestParam String bookingFromDate,  @RequestParam String bookingToDate) {
+		return userBookingService.saveUserBooking(userBookingDetails, bookingFromDate, bookingToDate);
 	}
 
 	@GetMapping("get-user-booking-details-by-booking-id")

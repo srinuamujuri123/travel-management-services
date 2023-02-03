@@ -30,8 +30,8 @@ public class CityController {
 	}
 	
 	@GetMapping("/get-city-details")
-	public TMSResponse getCityDetails(@RequestParam Boolean isActive, @RequestParam String search) {
-		return cityService.getCityDetails(isActive, search);
+	public TMSResponse getCityDetails(@RequestParam Boolean isActive, @RequestParam(required = false) String search,@RequestParam Integer start, @RequestParam Integer end) {
+		return cityService.getCityDetails(isActive, search, start, end);
 	}
 
 	@DeleteMapping("/delete-city-details-by-id")

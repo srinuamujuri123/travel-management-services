@@ -5,7 +5,7 @@ import com.tms.model.UserBookingDetails;
 
 public interface UserBookingService {
 
-	TMSResponse saveUserBooking(UserBookingDetails userBookingDetails);
+	TMSResponse saveUserBooking(UserBookingDetails userBookingDetails, String bookingFromDate, String bookingToDate);
 
 	TMSResponse getUserBookingDetailsByBookingId(Integer userBookingId);
 

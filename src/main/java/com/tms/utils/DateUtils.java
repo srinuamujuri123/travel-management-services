@@ -131,7 +131,6 @@ public class DateUtils {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(date);
 		cal.add(Calendar.DATE, days);
-
 		return cal.getTime();
 	}
 

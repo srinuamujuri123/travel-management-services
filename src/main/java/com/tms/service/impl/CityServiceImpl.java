@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tms.common.CommonConstants.City;
@@ -99,19 +101,21 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public TMSResponse getCityDetails(Boolean isActive, String search) {
+	public TMSResponse getCityDetails(Boolean isActive, String search, Integer start, Integer end) {
 		TMSResponse response = new TMSResponse();
 		List<CityDetails> cityDetailsList = new ArrayList();
 		try {
+			Pageable pageable = PageRequest.of(start, end);
 			if (StringUtils.isNotEmpty(search)) {
-				cityDetailsList = cityDao.findAllByIsActiveAndCityNameContaining(isActive, search);
+				cityDetailsList = cityDao.findAllByIsActiveAndCityNameContaining(isActive, search, pageable);
 			} else {
-				cityDetailsList = cityDao.findAllByIsActive(isActive);
+				cityDetailsList = cityDao.findAllByIsActive(isActive, pageable);
 			}
 
 			if (CollectionUtils.isNotEmpty(cityDetailsList)) {
 				response.setData(cityDetailsList);
 				response.setCount(cityDetailsList.size());
+				response.setDetails(City.LISTFOUND);
 			} else {
 				response.setDetails(City.LISTNOTFOUND);
 			}

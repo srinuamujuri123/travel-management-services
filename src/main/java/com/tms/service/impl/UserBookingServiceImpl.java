@@ -3,6 +3,7 @@ package com.tms.service.impl;
 import static com.tms.utils.TMSUtils.ZERO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,6 +21,7 @@ import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserBookingDetails;
 import com.tms.service.UserBookingService;
+import com.tms.utils.DateUtils;
 import com.tms.utils.TMSUtils;
 
 @Service
@@ -33,7 +35,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 	static Logger logger = LoggerFactory.getLogger(UserBookingServiceImpl.class);
 
 	@Override
-	public TMSResponse saveUserBooking(UserBookingDetails userBookingDetails) {
+	public TMSResponse saveUserBooking(UserBookingDetails userBookingDetails, String bookingFromDate,  String bookingToDate) {
 		TMSResponse response = new TMSResponse();
 
 		try {
@@ -49,10 +51,18 @@ public class UserBookingServiceImpl implements UserBookingService {
 			}
 
 			HotelDetails hotelNameObjFromDb = hotelDao.findByHotelNameAndCityName(hotelName, cityName);
+			if (hotelNameObjFromDb == null) {
+				response.setDetails(Hotel.RECORDNOTFOUND);
+				return response;
+			}
 			int roomsAvailable = hotelNameObjFromDb.getRoomsAvailable();
 			int remainingAvaibleRoomsToSave = roomsAvailable - userRequestedRooms;
 			if (roomsAvailable > ZERO && roomsAvailable >= userRequestedRooms) {
 				userBookingDetails.setActive(Boolean.TRUE);
+				Date fromDate = DateUtils.getDateFromStringDate(bookingFromDate);	
+				Date toDate = DateUtils.getDateFromStringDate(bookingToDate);
+				userBookingDetails.setFromDate(fromDate);
+				userBookingDetails.setToDate(toDate);
 				response.setData(userBookingDao.save(userBookingDetails));
 				hotelNameObjFromDb.setRoomsAvailable(remainingAvaibleRoomsToSave);
 				hotelDao.save(hotelNameObjFromDb);
