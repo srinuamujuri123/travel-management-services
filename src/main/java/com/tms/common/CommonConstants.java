@@ -68,6 +68,7 @@ public interface CommonConstants {
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
 		String HOTELEXIST = "Hotel name existing already";
 		String UNABLETOFETCHDATA = "Oops, unable to fetch Data, try after some time.";
+		String ROOMCANCELLED = "Rooms cancelled successfully.";
 	}
 
 	public interface City {

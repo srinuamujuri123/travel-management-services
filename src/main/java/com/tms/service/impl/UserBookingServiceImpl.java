@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tms.common.CommonConstants;
 import com.tms.common.CommonConstants.Hotel;
 import com.tms.dao.HotelDao;
 import com.tms.dao.UserBookingDao;
@@ -35,7 +36,8 @@ public class UserBookingServiceImpl implements UserBookingService {
 	static Logger logger = LoggerFactory.getLogger(UserBookingServiceImpl.class);
 
 	@Override
-	public TMSResponse saveUserBooking(UserBookingDetails userBookingDetails, String bookingFromDate,  String bookingToDate) {
+	public TMSResponse saveUserBooking(UserBookingDetails userBookingDetails, String bookingFromDate,
+			String bookingToDate) {
 		TMSResponse response = new TMSResponse();
 
 		try {
@@ -59,7 +61,9 @@ public class UserBookingServiceImpl implements UserBookingService {
 			int remainingAvaibleRoomsToSave = roomsAvailable - userRequestedRooms;
 			if (roomsAvailable > ZERO && roomsAvailable >= userRequestedRooms) {
 				userBookingDetails.setActive(Boolean.TRUE);
-				Date fromDate = DateUtils.getDateFromStringDate(bookingFromDate);	
+				userBookingDetails.setCreatedOn(DateUtils.getCurrentDate());
+				userBookingDetails.setUpdatedOn(DateUtils.getCurrentDate());
+				Date fromDate = DateUtils.getDateFromStringDate(bookingFromDate);
 				Date toDate = DateUtils.getDateFromStringDate(bookingToDate);
 				userBookingDetails.setFromDate(fromDate);
 				userBookingDetails.setToDate(toDate);
@@ -120,16 +124,23 @@ public class UserBookingServiceImpl implements UserBookingService {
 			if (bookingDetailsNotFound) {
 				response.setDetails("Oops no room booking found with Booking Id " + userBookingId);
 			} else {
-				userBookingDetailsDb.setActive(Boolean.FALSE);
-				UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
 
+				userBookingDetailsDb.setActive(Boolean.FALSE);
+				userBookingDetailsDb.setUpdatedOn(DateUtils.getCurrentDate());
+				UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
+				HotelDetails userHotelDetails = hotelDao.getHotelDetailsByHotelNameAndCityName(
+						userBookingDetailsDb.getHotelName(), userBookingDetailsDb.getCityName());
+				int availableHotelRoooms = userHotelDetails.getRoomsAvailable() + userBookingDetailsDb.getNoOfRoom();;
+				userHotelDetails.setRoomsAvailable(availableHotelRoooms);
+				hotelDao.save(userHotelDetails);
 				response.setData(updatedUserBookingDetails);
-				response.setDetails("Rooms Cancelled successfully");
+				response.setDetails(Hotel.ROOMCANCELLED);
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails("Oops, Unable to cancel rooms, please try after some time.");
 			String errorMessage = TMSUtils.getExceptionDetails(e);
+			response.setErrorMessage(errorMessage);
 			response.setStatus(Status.FAILED);
 		}
 		return response;

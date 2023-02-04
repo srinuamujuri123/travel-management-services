@@ -13,6 +13,7 @@ import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserDetails;
 import com.tms.service.UserService;
+import com.tms.utils.DateUtils;
 import com.tms.utils.TMSUtils;
 
 @Service
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
 			UserDetails userMobileObj = userdao.findByUserMobileNo(userDetails.getUserMobileNo());
 
 			if (userEmailObj == null && userMobileObj == null) {
+				userDetails.setCreatedOn(DateUtils.getTodayDate());
+				userDetails.setUpdatedOn(DateUtils.getTodayDate());
 				userDetails.setActive(true);
 				response.setData(userdao.save(userDetails));
 				response.setDetails(User.SAVE);
