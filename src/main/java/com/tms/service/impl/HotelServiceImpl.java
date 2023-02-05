@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tms.common.CommonConstants.Hotel;
@@ -62,7 +64,7 @@ public class HotelServiceImpl implements HotelService {
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
-			response.setDetails("Oops, Unable to fetch Data, please try after some time.");
+			response.setDetails(Hotel.UNABLETOFETCHDATA);
 			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
@@ -70,15 +72,16 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public TMSResponse getHotelDetails(Boolean isActive, String search) {
+	public TMSResponse getHotelDetails(Boolean isActive, String search, Integer start, Integer end) {
 		TMSResponse response = new TMSResponse();
 		List<HotelDetails> hotelDetailsList = new ArrayList<HotelDetails>();
 		try {
+			Pageable pageable = PageRequest.of(start, end);
 			if (StringUtils.isNotEmpty(search)) {
 				// if(search != null || !search.isEmpty()) {
-				hotelDetailsList = hotelDao.findAllByIsActiveAndHotelNameContaining(isActive, search);
+				hotelDetailsList = hotelDao.findAllByIsActiveAndHotelNameContaining(isActive, search, pageable);
 			} else {
-				hotelDetailsList = hotelDao.findAllByIsActive(isActive);
+				hotelDetailsList = hotelDao.findAllByIsActive(isActive, pageable);
 			}
 			if (CollectionUtils.isNotEmpty(hotelDetailsList)) {
 				// if(hotelDetailsList != null || hotelDetailsList.size() >0) {
@@ -87,18 +90,15 @@ public class HotelServiceImpl implements HotelService {
 			} else {
 				response.setDetails(Hotel.LISTNOTFOUND);
 			}
-			// return response.setStatus(Status.OK);
 			response.setStatus(Status.OK);
 			return response;
 
 		} catch (Exception e) {
-			response.setDetails("Oops, Unable to fetch Data");
+			response.setDetails(Hotel.UNABLETOFETCHDATA);
 			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
-
 		return response;
-
 	}
 
 	@Override

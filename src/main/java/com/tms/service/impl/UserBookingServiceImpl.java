@@ -5,17 +5,16 @@ import static com.tms.utils.TMSUtils.ZERO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tms.common.CommonConstants;
 import com.tms.common.CommonConstants.Hotel;
 import com.tms.dao.HotelDao;
 import com.tms.dao.UserBookingDao;
@@ -118,6 +117,32 @@ public class UserBookingServiceImpl implements UserBookingService {
 		}
 		return response;
 	}
+	
+	@Override
+	public TMSResponse getUserBookingDetails(Boolean isActive, String search, Integer start, Integer end) {
+		TMSResponse response = new TMSResponse();
+		List<UserBookingDetails> userBookingDetailsList = new ArrayList<UserBookingDetails>();
+		try {
+			Pageable pageable = PageRequest.of(start, end);
+			if (StringUtils.isNotEmpty(search)) {
+				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search, pageable);
+			} else {
+				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive,pageable);
+			}
+			if (CollectionUtils.isNotEmpty(userBookingDetailsList)) {
+				response.setData(userBookingDetailsList);
+				response.setCount(userBookingDetailsList.size());
+			} else {
+				response.setDetails(Hotel.LISTNOTFOUND);
+			}
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDetails(Hotel.UNABLETOFETCHDATA);
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
+			response.setStatus(Status.FAILED);
+		}
+		return response;
+	}
 
 	@Override
 	public TMSResponse deleteBookingDetailsByBookingId(Integer userBookingId) {
@@ -156,29 +181,6 @@ public class UserBookingServiceImpl implements UserBookingService {
 		return response;
 	}
 
-	@Override
-	public TMSResponse getUserBookingDetails(Boolean isActive, String search) {
-		TMSResponse response = new TMSResponse();
-		List<UserBookingDetails> userBookingDetailsList = new ArrayList<UserBookingDetails>();
-		try {
-			if (StringUtils.isNotEmpty(search)) {
-				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search);
-			} else {
-				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive);
-			}
-			if (CollectionUtils.isNotEmpty(userBookingDetailsList)) {
-				response.setData(userBookingDetailsList);
-				response.setCount(userBookingDetailsList.size());
-			} else {
-				response.setDetails(Hotel.LISTNOTFOUND);
-			}
-			response.setStatus(Status.OK);
-		} catch (Exception e) {
-			response.setDetails(Hotel.UNABLETOFETCHDATA);
-			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
-			response.setStatus(Status.FAILED);
-		}
-		return response;
-	}
+
 
 }

@@ -2,6 +2,7 @@ package com.tms.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,9 @@ public interface HotelDao extends JpaRepository<HotelDetails, Integer> {
 
 	HotelDetails findByHotelNameAndCityName(String hotelName, String cityName);
 
-	List<HotelDetails> findAllByIsActive(Boolean isActive);
+	List<HotelDetails> findAllByIsActive(Boolean isActive, Pageable pageable);
 
-	List<HotelDetails> findAllByIsActiveAndHotelNameContaining(Boolean isActive, String search);
+	List<HotelDetails> findAllByIsActiveAndHotelNameContaining(Boolean isActive, String search, Pageable pageable);
 
 	HotelDetails getHotelDetailsByHotelNameAndCityName(String hotelName, String cityName);
 }

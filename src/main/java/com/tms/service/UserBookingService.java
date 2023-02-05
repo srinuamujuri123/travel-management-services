@@ -11,6 +11,6 @@ public interface UserBookingService {
 
 	TMSResponse deleteBookingDetailsByBookingId(Integer userBookingId);
 
-	TMSResponse getUserBookingDetails(Boolean isActive, String search);
+	TMSResponse getUserBookingDetails(Boolean isActive, String search, Integer start, Integer end);
 
 }
