@@ -9,7 +9,7 @@ import org.hibernate.exception.GenericJDBCException;
 public class TMSUtils {
 
 	public final static int ZERO = BigDecimal.ZERO.intValue();
-	public final static String TMS_PREFIX = "TMS";
+	public final static String BOOKINGID_PREFIX = "TMS";
 
 	public static String getSQLException(Exception e) {
 		if (e.getCause() != null && e.getCause() instanceof GenericJDBCException) {

@@ -69,7 +69,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 				Date toDate = DateUtils.getDateFromStringDate(bookingToDate);
 				userBookingDetails.setFromDate(fromDate);
 				userBookingDetails.setToDate(toDate);
-				String bookingId = TMSUtils.TMS_PREFIX + userBookingDetails.getBookingId() + TMSUtils.generateRandomString();
+				String bookingId = TMSUtils.BOOKINGID_PREFIX + userBookingDetails.getBookingId() + TMSUtils.generateRandomString();
 				userBookingDetails.setBookingId(bookingId);
 				response.setData(userBookingDao.save(userBookingDetails));
 				hotelNameObjFromDb.setRoomsAvailable(remainingAvaibleRoomsToSave);
