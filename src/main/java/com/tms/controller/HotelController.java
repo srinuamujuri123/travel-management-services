@@ -25,8 +25,8 @@ public class HotelController {
 	}
 	
 	@GetMapping("/get-hotel-details")
-	public TMSResponse getHotelDetails(@RequestParam Boolean isActive, @RequestParam String search) {
-		return hotelService.getHotelDetails(isActive, search);
+	public TMSResponse getHotelDetails(@RequestParam Boolean isActive, @RequestParam String search, @RequestParam Integer start, @RequestParam Integer end) {
+		return hotelService.getHotelDetails(isActive, search, start, end);
 	}
 
 	@GetMapping("/get-hotel-details-by-id")

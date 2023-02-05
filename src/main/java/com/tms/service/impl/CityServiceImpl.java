@@ -103,7 +103,7 @@ public class CityServiceImpl implements CityService {
 	@Override
 	public TMSResponse getCityDetails(Boolean isActive, String search, Integer start, Integer end) {
 		TMSResponse response = new TMSResponse();
-		List<CityDetails> cityDetailsList = new ArrayList();
+		List<CityDetails> cityDetailsList = new ArrayList<CityDetails>();
 		try {
 			Pageable pageable = PageRequest.of(start, end);
 			if (StringUtils.isNotEmpty(search)) {
