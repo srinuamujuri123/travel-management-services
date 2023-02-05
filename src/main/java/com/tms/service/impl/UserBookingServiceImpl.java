@@ -5,8 +5,10 @@ import static com.tms.utils.TMSUtils.ZERO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +69,9 @@ public class UserBookingServiceImpl implements UserBookingService {
 				Date toDate = DateUtils.getDateFromStringDate(bookingToDate);
 				userBookingDetails.setFromDate(fromDate);
 				userBookingDetails.setToDate(toDate);
+				String bookingId = TMSUtils.TMS_PREFIX + userBookingDetails.getBookingId() + TMSUtils.generateRandomString();
 				response.setData(userBookingDao.save(userBookingDetails));
+				userBookingDetails.setBookingId(bookingId);
 				hotelNameObjFromDb.setRoomsAvailable(remainingAvaibleRoomsToSave);
 				hotelDao.save(hotelNameObjFromDb);
 				response.setDetails("Booking succesful, you have booked " + userRequestedRooms + " rooms.");
@@ -129,8 +133,10 @@ public class UserBookingServiceImpl implements UserBookingService {
 					userBookingDetailsDb.setActive(Boolean.FALSE);
 					userBookingDetailsDb.setUpdatedOn(DateUtils.getCurrentDate());
 					UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
-					HotelDetails userHotelDetails = hotelDao.getHotelDetailsByHotelNameAndCityName(userBookingDetailsDb.getHotelName(), userBookingDetailsDb.getCityName());
-					int availableHotelRoooms = userHotelDetails.getRoomsAvailable() + userBookingDetailsDb.getNoOfRoom();
+					HotelDetails userHotelDetails = hotelDao.getHotelDetailsByHotelNameAndCityName(
+							userBookingDetailsDb.getHotelName(), userBookingDetailsDb.getCityName());
+					int availableHotelRoooms = userHotelDetails.getRoomsAvailable()
+							+ userBookingDetailsDb.getNoOfRoom();
 					userHotelDetails.setRoomsAvailable(availableHotelRoooms);
 					hotelDao.save(userHotelDetails);
 					response.setData(updatedUserBookingDetails);

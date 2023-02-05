@@ -12,7 +12,4 @@ public interface HotelService {
 	TMSResponse deleteHotelDetailsById(Integer hotelId, boolean status);
 
 	TMSResponse getHotelDetails(Boolean isActive, String search);
-
-
-
 }

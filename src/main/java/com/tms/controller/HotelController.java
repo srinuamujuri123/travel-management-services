@@ -22,7 +22,6 @@ public class HotelController {
 	@PostMapping("/save-hotel-details")
 	public TMSResponse saveHotelDetails(@RequestBody HotelDetails hotelDetails) {
 		return hotelService.saveHotelDetails(hotelDetails);
-
 	}
 	
 	@GetMapping("/get-hotel-details")

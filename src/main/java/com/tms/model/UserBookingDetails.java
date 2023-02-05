@@ -18,6 +18,7 @@ public class UserBookingDetails extends BaseEntity {
 	String cityName;
 	String hotelName;
 	Integer noOfRoom;
+	String bookingId;
 	Date fromDate;
 	Date toDate;
 	public Integer getUserBookingId() {
@@ -61,6 +62,12 @@ public class UserBookingDetails extends BaseEntity {
 	}
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
+	}
+	public String getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(String bookingId) {
+		this.bookingId = bookingId;
 	}
 	
 }
