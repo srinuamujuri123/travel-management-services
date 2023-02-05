@@ -69,6 +69,7 @@ public interface CommonConstants {
 		String HOTELEXIST = "Hotel name existing already";
 		String UNABLETOFETCHDATA = "Oops, unable to fetch Data, try after some time.";
 		String ROOMCANCELLED = "Rooms cancelled successfully.";
+		String REACHEDCANCELLATIONTIME = "Oops!! Unable to cancel the booking because you have reached cancellation time";
 	}
 
 	public interface City {

@@ -27,9 +27,4 @@ public interface HotelDao extends JpaRepository<HotelDetails, Integer> {
 	List<HotelDetails> findAllByIsActiveAndHotelNameContaining(Boolean isActive, String search);
 
 	HotelDetails getHotelDetailsByHotelNameAndCityName(String hotelName, String cityName);
-
-	void save(Integer setRoomsAvailable); //created
-
-
-
 }

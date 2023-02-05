@@ -125,16 +125,20 @@ public class UserBookingServiceImpl implements UserBookingService {
 				response.setDetails("Oops no room booking found with Booking Id " + userBookingId);
 			} else {
 
-				userBookingDetailsDb.setActive(Boolean.FALSE);
-				userBookingDetailsDb.setUpdatedOn(DateUtils.getCurrentDate());
-				UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
-				HotelDetails userHotelDetails = hotelDao.getHotelDetailsByHotelNameAndCityName(
-						userBookingDetailsDb.getHotelName(), userBookingDetailsDb.getCityName());
-				int availableHotelRoooms = userHotelDetails.getRoomsAvailable() + userBookingDetailsDb.getNoOfRoom();;
-				userHotelDetails.setRoomsAvailable(availableHotelRoooms);
-				hotelDao.save(userHotelDetails);
-				response.setData(updatedUserBookingDetails);
-				response.setDetails(Hotel.ROOMCANCELLED);
+				if (DateUtils.getCurrentDate().before(userBookingDetailsDb.getFromDate())) {
+					userBookingDetailsDb.setActive(Boolean.FALSE);
+					userBookingDetailsDb.setUpdatedOn(DateUtils.getCurrentDate());
+					UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
+					HotelDetails userHotelDetails = hotelDao.getHotelDetailsByHotelNameAndCityName(userBookingDetailsDb.getHotelName(), userBookingDetailsDb.getCityName());
+					int availableHotelRoooms = userHotelDetails.getRoomsAvailable() + userBookingDetailsDb.getNoOfRoom();
+					userHotelDetails.setRoomsAvailable(availableHotelRoooms);
+					hotelDao.save(userHotelDetails);
+					response.setData(updatedUserBookingDetails);
+					response.setDetails(Hotel.ROOMCANCELLED);
+				} else {
+					response.setDetails(Hotel.REACHEDCANCELLATIONTIME);
+				}
+
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
@@ -165,7 +169,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
 			response.setDetails(Hotel.UNABLETOFETCHDATA);
-			String errorMessage = TMSUtils.getExceptionDetails(e);
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
 		return response;

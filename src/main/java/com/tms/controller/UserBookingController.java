@@ -35,7 +35,7 @@ public class UserBookingController {
 		return userBookingService.getUserBookingDetails(isActive, search);
 	}
 
-	@RequestMapping("delete-Booking-Details-By-Booking-Id")
+	@RequestMapping("delete-booking-details-by-booking-id")
 	public TMSResponse deleteBookingDetailsByBookingId(@RequestParam Integer userBookingId) {
 		return userBookingService.deleteBookingDetailsByBookingId(userBookingId);
 	}

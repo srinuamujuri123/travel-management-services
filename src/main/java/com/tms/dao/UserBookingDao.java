@@ -1,5 +1,6 @@
 package com.tms.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,7 @@ public interface UserBookingDao extends JpaRepository<UserBookingDetails, Intege
 	List<UserBookingDetails> findAllByIsActive(Boolean isActive);
 
 	List<UserBookingDetails> findAllByIsActiveAndHotelNameContaining(Boolean isActive, String search);
+
+	List<UserBookingDetails> findAllByIsActiveAndToDate(Boolean true1, Date currentDate);
 
 }
