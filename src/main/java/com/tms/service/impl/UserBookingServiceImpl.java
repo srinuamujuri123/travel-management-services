@@ -1,23 +1,19 @@
 package com.tms.service.impl;
 
-import static com.tms.utils.TMSUtils.ZERO;
+import static com.tms.utils.TMSUtils.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.tms.common.CommonConstants;
-import com.tms.common.CommonConstants.Hotel;
-import com.tms.dao.HotelDao;
 import com.tms.dao.UserBookingDao;
 import com.tms.model.HotelDetails;
 import com.tms.model.TMSResponse;
@@ -25,6 +21,7 @@ import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserBookingDetails;
 import com.tms.service.UserBookingService;
 import com.tms.utils.DateUtils;
+import com.tms.utils.RestClient;
 import com.tms.utils.TMSUtils;
 
 @Service
@@ -33,7 +30,9 @@ public class UserBookingServiceImpl implements UserBookingService {
 	@Autowired
 	UserBookingDao userBookingDao;
 	@Autowired
-	HotelDao hotelDao;
+	RestClient restClient;
+	@Autowired
+	TMSUtils tmsUtils;
 
 	static Logger logger = LoggerFactory.getLogger(UserBookingServiceImpl.class);
 
@@ -54,9 +53,10 @@ public class UserBookingServiceImpl implements UserBookingService {
 				return response;
 			}
 
-			HotelDetails hotelNameObjFromDb = hotelDao.findByHotelNameAndCityName(hotelName, cityName);
+			HotelDetails hotelNameObjFromDb = tmsUtils.getHotelDetailsByHotelNameAndCityName(cityName, hotelName);
+
 			if (hotelNameObjFromDb == null) {
-				response.setDetails(Hotel.RECORDNOTFOUND);
+				// response.setDetails(Hotel.RECORDNOTFOUND);
 				return response;
 			}
 			int roomsAvailable = hotelNameObjFromDb.getRoomsAvailable();
@@ -69,11 +69,12 @@ public class UserBookingServiceImpl implements UserBookingService {
 				Date toDate = DateUtils.getDateFromStringDate(bookingToDate);
 				userBookingDetails.setFromDate(fromDate);
 				userBookingDetails.setToDate(toDate);
-				String bookingId = TMSUtils.BOOKINGID_PREFIX + userBookingDetails.getBookingId() + TMSUtils.generateRandomString();
+				String bookingId = TMSUtils.BOOKINGID_PREFIX + userBookingDetails.getBookingId()
+						+ TMSUtils.generateRandomString();
 				userBookingDetails.setBookingId(bookingId);
 				response.setData(userBookingDao.save(userBookingDetails));
 				hotelNameObjFromDb.setRoomsAvailable(remainingAvaibleRoomsToSave);
-				hotelDao.save(hotelNameObjFromDb);
+				// hotelDao.save(hotelNameObjFromDb);
 				response.setDetails("Booking succesful, you have booked " + userRequestedRooms + " rooms.");
 			} else {
 				if (roomsAvailable < userRequestedRooms) {
@@ -133,16 +134,16 @@ public class UserBookingServiceImpl implements UserBookingService {
 					userBookingDetailsDb.setActive(Boolean.FALSE);
 					userBookingDetailsDb.setUpdatedOn(DateUtils.getCurrentDate());
 					UserBookingDetails updatedUserBookingDetails = userBookingDao.save(userBookingDetailsDb);
-					HotelDetails userHotelDetails = hotelDao.getHotelDetailsByHotelNameAndCityName(
+					HotelDetails userHotelDetails = tmsUtils.getHotelDetailsByHotelNameAndCityName(
 							userBookingDetailsDb.getHotelName(), userBookingDetailsDb.getCityName());
 					int availableHotelRoooms = userHotelDetails.getRoomsAvailable()
 							+ userBookingDetailsDb.getNoOfRoom();
 					userHotelDetails.setRoomsAvailable(availableHotelRoooms);
-					hotelDao.save(userHotelDetails);
+					// hotelDao.save(userHotelDetails);
 					response.setData(updatedUserBookingDetails);
-					response.setDetails(Hotel.ROOMCANCELLED);
+					// response.setDetails(Hotel.ROOMCANCELLED);
 				} else {
-					response.setDetails(Hotel.REACHEDCANCELLATIONTIME);
+					// response.setDetails(Hotel.REACHEDCANCELLATIONTIME);
 				}
 
 			}
@@ -170,11 +171,11 @@ public class UserBookingServiceImpl implements UserBookingService {
 				response.setData(userBookingDetailsList);
 				response.setCount(userBookingDetailsList.size());
 			} else {
-				response.setDetails(Hotel.LISTNOTFOUND);
+				// response.setDetails(Hotel.LISTNOTFOUND);
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
-			response.setDetails(Hotel.UNABLETOFETCHDATA);
+			// response.setDetails(Hotel.UNABLETOFETCHDATA);
 			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
