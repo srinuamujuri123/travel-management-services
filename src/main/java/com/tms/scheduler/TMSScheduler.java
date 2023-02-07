@@ -19,7 +19,7 @@ public class TMSScheduler {
 	@Autowired
 	UserBookingDao userBookingDao;
 	
-	@Scheduled(cron = "*/10 * * * * *")
+	//@Scheduled(cron = "*/10 * * * * *")	//if you active this then the Scheduler will run every 10 seconds.
 	public void saveUserDetailsAsInactive() throws ParseException {
 		Date yesterdayDate = DateUtils.addDays(DateUtils.getCurrentDate(), -1);
 		List<UserBookingDetails> userBookingDBList = userBookingDao.findAllByIsActiveAndToDate(Boolean.TRUE, yesterdayDate);
