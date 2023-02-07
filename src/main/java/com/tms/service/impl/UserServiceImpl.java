@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tms.common.CommonConstants.User;
@@ -51,16 +53,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public TMSResponse getuserdetails(Boolean isActive, String search) {
+	public TMSResponse getuserdetails(Boolean isActive, String search, Integer start, Integer end) {
 
 		TMSResponse response = new TMSResponse();
 		List<UserDetails> userDetailsList = new ArrayList<>();
 		try {
+			Pageable pageable = PageRequest.of(start, end);
 			// if (StringUtils.isNotEmpty(search)) {
 			if (search != null || !search.isEmpty()) {
-				userDetailsList = userdao.findAllByIsActiveAndUserMailIdContains(isActive, search);
+				userDetailsList = userdao.findAllByIsActiveAndUserMailIdContains(isActive, search, pageable);
 			} else {
-				userDetailsList = userdao.findAllByIsActive(isActive);
+				userDetailsList = userdao.findAllByIsActive(isActive, pageable);
 			}
 
 			// if (CollectionUtils.isNotEmpty(userDetailsList)) {

@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -98,7 +97,7 @@ public class DateUtils {
 		return false;
 	}
 
-	public static boolean isNotEmpty(List list) {
+	public static boolean isNotEmpty(List<?> list) {
 
 		boolean isNotEmpty = false;
 		if (list != null && !list.isEmpty()) {

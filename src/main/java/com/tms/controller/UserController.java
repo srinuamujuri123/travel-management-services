@@ -30,9 +30,9 @@ public class UserController {
 	}
 
 	@GetMapping("/get-user-details")
-	public TMSResponse getuserdetails(@RequestParam Boolean isActive , @RequestParam String search) {
+	public TMSResponse getuserdetails(@RequestParam Boolean isActive , @RequestParam String search,@RequestParam Integer start, @RequestParam Integer end) {
 
-		return userService.getuserdetails(isActive, search);
+		return userService.getuserdetails(isActive, search, start, end);
 	}
 
 	@GetMapping("/get-user-details-by-id")
