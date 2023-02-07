@@ -58,7 +58,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 			HotelDetails hotelNameObjFromDb = tmsUtils.getHotelDetailsByHotelNameAndCityName(cityName, hotelName);
 
 			if (hotelNameObjFromDb == null) {
-				// response.setDetails(Hotel.RECORDNOTFOUND);
+				response.setDetails(Hotel.RECORDNOTFOUND);
 				return response;
 			}
 			int roomsAvailable = hotelNameObjFromDb.getRoomsAvailable();
