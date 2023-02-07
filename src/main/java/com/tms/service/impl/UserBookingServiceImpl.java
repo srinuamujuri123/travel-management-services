@@ -12,10 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 =======
+=======
+>>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -193,6 +196,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@Override
 	public TMSResponse getUserBookingDetails(Boolean isActive, String search) {
 		TMSResponse response = new TMSResponse();
@@ -217,6 +221,9 @@ public class UserBookingServiceImpl implements UserBookingService {
 		}
 		return response;
 	}
+=======
+
+>>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 =======
 
 >>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
