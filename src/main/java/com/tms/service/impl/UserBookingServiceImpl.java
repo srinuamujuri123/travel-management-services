@@ -11,9 +11,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+=======
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.tms.common.CommonConstants.Hotel;
+import com.tms.dao.HotelDao;
+>>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 import com.tms.dao.UserBookingDao;
 import com.tms.model.HotelDetails;
 import com.tms.model.TMSResponse;
@@ -119,6 +128,32 @@ public class UserBookingServiceImpl implements UserBookingService {
 		}
 		return response;
 	}
+	
+	@Override
+	public TMSResponse getUserBookingDetails(Boolean isActive, String search, Integer start, Integer end) {
+		TMSResponse response = new TMSResponse();
+		List<UserBookingDetails> userBookingDetailsList = new ArrayList<UserBookingDetails>();
+		try {
+			Pageable pageable = PageRequest.of(start, end);
+			if (StringUtils.isNotEmpty(search)) {
+				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search, pageable);
+			} else {
+				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive,pageable);
+			}
+			if (CollectionUtils.isNotEmpty(userBookingDetailsList)) {
+				response.setData(userBookingDetailsList);
+				response.setCount(userBookingDetailsList.size());
+			} else {
+				response.setDetails(Hotel.LISTNOTFOUND);
+			}
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDetails(Hotel.UNABLETOFETCHDATA);
+			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
+			response.setStatus(Status.FAILED);
+		}
+		return response;
+	}
 
 	@Override
 	public TMSResponse deleteBookingDetailsByBookingId(Integer userBookingId) {
@@ -157,6 +192,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 		return response;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public TMSResponse getUserBookingDetails(Boolean isActive, String search) {
 		TMSResponse response = new TMSResponse();
@@ -181,5 +217,8 @@ public class UserBookingServiceImpl implements UserBookingService {
 		}
 		return response;
 	}
+=======
+
+>>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 
 }

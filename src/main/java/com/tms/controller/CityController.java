@@ -25,12 +25,13 @@ public class CityController {
 	}
 
 	@GetMapping("/get-city-details-by-id")
-	public TMSResponse getCityDetailsById(@RequestBody CityDetails cityDetails, @RequestParam Integer cityId) {
+	public TMSResponse getCityDetailsById(@RequestParam Integer cityId) {
 		return cityService.getCityDetailsById(cityId);
 	}
-	
+
 	@GetMapping("/get-city-details")
-	public TMSResponse getCityDetails(@RequestParam Boolean isActive, @RequestParam(required = false) String search,@RequestParam Integer start, @RequestParam Integer end) {
+	public TMSResponse getCityDetails(@RequestParam Boolean isActive, @RequestParam(required = false) String search,
+			@RequestParam Integer start, @RequestParam Integer end) {
 		return cityService.getCityDetails(isActive, search, start, end);
 	}
 
