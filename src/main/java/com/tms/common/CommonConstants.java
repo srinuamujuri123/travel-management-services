@@ -64,5 +64,26 @@ public interface CommonConstants {
 		String LISTNOTFOUND = "City List Not Found";
 		String LISTFOUND = "City List Found";
 	}
+	
+	public interface Hotel {
+
+		String SAVE = "Hotel Data Saved Successfully";
+		String UPDATE = "Hotel Updated Successfully";
+		String RECORDFOUND = "Hotel Found";
+		String RECORDNOTFOUND = "Hotel Not Found";
+		String LISTFOUND = "Hotel List Found";
+		String LISTNOTFOUND = "Hotel List Not Found";
+		String EMAILEXIST = "Email Already Exists";
+		String PHONEEXIST = "Phone Number Already Exists";
+		String ACTIVATEUSER = "Hotel Activated successfully";
+		String MEMBER = "Member";
+		String ERROR = "Error while saving the hotel details";
+		String DELETED = "Deleted user Details sucessfully";
+		String UNABLETODELETE = "Oops, Unable to Delete Data";
+		String HOTELEXIST = "Hotel name existing already";
+		String UNABLETOFETCHDATA = "Oops, unable to fetch Data, try after some time.";
+		String ROOMCANCELLED = "Rooms cancelled successfully.";
+		String REACHEDCANCELLATIONTIME = "Oops!! Unable to cancel the booking because you have reached cancellation time";
+	}
 
 }

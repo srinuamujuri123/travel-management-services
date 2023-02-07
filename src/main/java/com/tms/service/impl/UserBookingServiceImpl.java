@@ -1,6 +1,6 @@
 package com.tms.service.impl;
 
-import static com.tms.utils.TMSUtils.*;
+import static com.tms.utils.TMSUtils.ZERO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,21 +11,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-<<<<<<< HEAD
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
-=======
-=======
->>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tms.common.CommonConstants.Hotel;
-import com.tms.dao.HotelDao;
->>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 import com.tms.dao.UserBookingDao;
 import com.tms.model.HotelDetails;
 import com.tms.model.TMSResponse;
@@ -126,12 +116,13 @@ public class UserBookingServiceImpl implements UserBookingService {
 		} catch (Exception e) {
 			response.setDetails("Oops unable to fetch data, try after some time.");
 			String errorMessage = TMSUtils.getExceptionDetails(e);
+			response.setErrorMessage(errorMessage);
 			response.setStatus(Status.FAILED);
 			e.printStackTrace();
 		}
 		return response;
 	}
-	
+
 	@Override
 	public TMSResponse getUserBookingDetails(Boolean isActive, String search, Integer start, Integer end) {
 		TMSResponse response = new TMSResponse();
@@ -139,9 +130,10 @@ public class UserBookingServiceImpl implements UserBookingService {
 		try {
 			Pageable pageable = PageRequest.of(start, end);
 			if (StringUtils.isNotEmpty(search)) {
-				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search, pageable);
+				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search,
+						pageable);
 			} else {
-				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive,pageable);
+				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive, pageable);
 			}
 			if (CollectionUtils.isNotEmpty(userBookingDetailsList)) {
 				response.setData(userBookingDetailsList);
@@ -179,9 +171,9 @@ public class UserBookingServiceImpl implements UserBookingService {
 					userHotelDetails.setRoomsAvailable(availableHotelRoooms);
 					// hotelDao.save(userHotelDetails);
 					response.setData(updatedUserBookingDetails);
-					// response.setDetails(Hotel.ROOMCANCELLED);
+					response.setDetails(Hotel.ROOMCANCELLED);
 				} else {
-					// response.setDetails(Hotel.REACHEDCANCELLATIONTIME);
+					response.setDetails(Hotel.REACHEDCANCELLATIONTIME);
 				}
 
 			}
@@ -194,38 +186,5 @@ public class UserBookingServiceImpl implements UserBookingService {
 		}
 		return response;
 	}
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-	@Override
-	public TMSResponse getUserBookingDetails(Boolean isActive, String search) {
-		TMSResponse response = new TMSResponse();
-		List<UserBookingDetails> userBookingDetailsList = new ArrayList<UserBookingDetails>();
-		try {
-			if (StringUtils.isNotEmpty(search)) {
-				userBookingDetailsList = userBookingDao.findAllByIsActiveAndHotelNameContaining(isActive, search);
-			} else {
-				userBookingDetailsList = userBookingDao.findAllByIsActive(isActive);
-			}
-			if (CollectionUtils.isNotEmpty(userBookingDetailsList)) {
-				response.setData(userBookingDetailsList);
-				response.setCount(userBookingDetailsList.size());
-			} else {
-				// response.setDetails(Hotel.LISTNOTFOUND);
-			}
-			response.setStatus(Status.OK);
-		} catch (Exception e) {
-			// response.setDetails(Hotel.UNABLETOFETCHDATA);
-			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
-			response.setStatus(Status.FAILED);
-		}
-		return response;
-	}
-=======
-
->>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
-=======
-
->>>>>>> fb7ebcb9627a1f36ccc2aa2d490c3aa5128e2613
 
 }
