@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.tms.common.CommonConstants.Hotel;
@@ -76,7 +77,8 @@ public class UserBookingServiceImpl implements UserBookingService {
 				userBookingDetails.setBookingId(bookingId);
 				response.setData(userBookingDao.save(userBookingDetails));
 				hotelNameObjFromDb.setRoomsAvailable(remainingAvaibleRoomsToSave);
-				// hotelDao.save(hotelNameObjFromDb);
+				ResponseEntity<HotelDetails> resp = restClient.postForEntity(
+						"http://localhost:8081/hotel/save-hotel-details", hotelNameObjFromDb, HotelDetails.class);
 				response.setDetails("Booking succesful, you have booked " + userRequestedRooms + " rooms.");
 			} else {
 				if (roomsAvailable < userRequestedRooms) {
@@ -169,7 +171,7 @@ public class UserBookingServiceImpl implements UserBookingService {
 					int availableHotelRoooms = userHotelDetails.getRoomsAvailable()
 							+ userBookingDetailsDb.getNoOfRoom();
 					userHotelDetails.setRoomsAvailable(availableHotelRoooms);
-					// hotelDao.save(userHotelDetails);
+					tmsUtils.saveHotelDetails(userHotelDetails);
 					response.setData(updatedUserBookingDetails);
 					response.setDetails(Hotel.ROOMCANCELLED);
 				} else {

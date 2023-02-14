@@ -20,6 +20,7 @@ public class TMSUtils {
 	public final static String BOOKINGID_PREFIX = "TMS";
 	public final static String HOTEL_VIP = "http://localhost:8081/"; 
 	public final static String GET_HOTELDETAILS_BY_CITYNAME_HOTELNAME = "hotel/get-hotel-details-by-hotelname-and-cityname";
+	public final static String SAVE_HOTEL_DETAILS = "hotel/save-or-hotel-details";
 
 	public static String getSQLException(Exception e) {
 		if (e.getCause() != null && e.getCause() instanceof GenericJDBCException) {
@@ -54,5 +55,10 @@ public class TMSUtils {
 				+ GET_HOTELDETAILS_BY_CITYNAME_HOTELNAME + "?hotelName=" + hotelName + "&cityName=" + cityName,
 				HotelDetails.class);
 		return hotelDetails.getBody();
+	}
+
+	public void saveHotelDetails(HotelDetails userHotelDetails) {
+		ResponseEntity<HotelDetails> resp = restClient.postForEntity(
+				HOTEL_VIP+ SAVE_HOTEL_DETAILS, userHotelDetails, HotelDetails.class);
 	}
 }
