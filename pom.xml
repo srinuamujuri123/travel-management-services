@@ -56,11 +56,6 @@
 			<version>3.0</version>
 		</dependency>
 		<!--test cases -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
