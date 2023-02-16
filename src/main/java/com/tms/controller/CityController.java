@@ -1,6 +1,7 @@
 package com.tms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class CityController {
 	@Autowired
 	CityService cityService;
 
+	@CacheEvict(value="city", allEntries=true)
 	@PostMapping("/save-city-details")
 	public TMSResponse saveCityDetails(@RequestBody CityDetails cityDetails) {
 		return cityService.saveCityDetails(cityDetails);
@@ -30,7 +32,7 @@ public class CityController {
 		return cityService.getCityDetailsById(cityId);
 	}
 
-	@Cacheable(value = "city-list")
+	@Cacheable(value = "city")
 	@GetMapping("/get-city-details")
 	public TMSResponse getCityDetails(@RequestParam Boolean isActive, @RequestParam(required = false) String search,
 			@RequestParam Integer start, @RequestParam Integer end) {
