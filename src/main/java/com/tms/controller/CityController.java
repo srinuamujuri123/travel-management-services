@@ -38,6 +38,11 @@ public class CityController {
 			@RequestParam Integer start, @RequestParam Integer end) {
 		return cityService.getCityDetails(isActive, search, start, end);
 	}
+	
+	@GetMapping("/get-cities")
+	public TMSResponse getCities() {
+		return cityService.getCities();
+	}
 
 	@DeleteMapping("/delete-city-details-by-id")
 	public TMSResponse deleteCityDetailsById(@RequestParam Integer cityId,
