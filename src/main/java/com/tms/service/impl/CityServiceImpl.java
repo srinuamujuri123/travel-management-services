@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.tms.common.CommonConstants.City;
 import com.tms.dao.CityDao;
 import com.tms.model.CityDetails;
+import com.tms.model.CityNamesView;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.service.CityService;
@@ -125,6 +126,14 @@ public class CityServiceImpl implements CityService {
 			response.setErrorMessage(TMSUtils.getExceptionDetails(e));
 			response.setStatus(Status.FAILED);
 		}
+		return response;
+	}
+
+	@Override
+	public TMSResponse getCities(String search) {
+		TMSResponse response = new TMSResponse();
+		List<CityNamesView> citiesList = StringUtils.isEmpty(search) ? cityDao.findAllProjectedBy() : cityDao.findAllByCityNameContains(search);
+		response.setData(citiesList);
 		return response;
 	}
 }
