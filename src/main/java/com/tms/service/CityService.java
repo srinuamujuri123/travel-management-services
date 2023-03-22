@@ -13,6 +13,6 @@ public interface CityService {
 
 	TMSResponse deleteCityDetailsById(Integer cityId, Boolean status);
 
-	TMSResponse getCities();
+	TMSResponse getCities(String search);
 
 }

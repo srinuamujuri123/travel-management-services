@@ -40,8 +40,8 @@ public class CityController {
 	}
 	
 	@GetMapping("/get-cities")
-	public TMSResponse getCities() {
-		return cityService.getCities();
+	public TMSResponse getCities(@RequestParam(required = false) String search) {
+		return cityService.getCities(search);
 	}
 
 	@DeleteMapping("/delete-city-details-by-id")

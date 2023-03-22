@@ -130,11 +130,10 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public TMSResponse getCities() {
+	public TMSResponse getCities(String search) {
 		TMSResponse response = new TMSResponse();
-		List<CityNamesView> citiesList = cityDao.findAllProjectedBy();
+		List<CityNamesView> citiesList = StringUtils.isEmpty(search) ? cityDao.findAllProjectedBy() : cityDao.findAllByCityNameContains(search);
 		response.setData(citiesList);
-		// TODO Auto-generated method stub
 		return response;
 	}
 }

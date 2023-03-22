@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tms.model.CityDetails;
@@ -25,5 +26,10 @@ public interface CityDao extends JpaRepository<CityDetails, Integer> {
 	List<CityDetails> findAllByIsActiveAndCityNameContaining(Boolean isActive, String search, Pageable pageable);
 
 	List<CityNamesView> findAllProjectedBy();
+
+	List<CityNamesView> findAllByCityNameContains(String search);
+	
+	@Query("SELECT c.cityName FROM CityDetails c")
+	List<String> getCityNameContains(String search);
 
 }
