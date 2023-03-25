@@ -15,6 +15,8 @@ import com.tms.model.CityDetails;
 import com.tms.model.TMSResponse;
 import com.tms.service.CityService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/city")
 public class CityController {
@@ -23,7 +25,7 @@ public class CityController {
 
 	@CacheEvict(value="city", allEntries=true)
 	@PostMapping("/save-city-details")
-	public TMSResponse saveCityDetails(@RequestBody CityDetails cityDetails) {
+	public TMSResponse saveCityDetails(@RequestBody @Valid CityDetails cityDetails) {
 		return cityService.saveCityDetails(cityDetails);
 	}
 

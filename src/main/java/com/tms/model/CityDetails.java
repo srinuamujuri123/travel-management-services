@@ -1,6 +1,6 @@
 package com.tms.model;
 
-import javax.validation.constraints.NotBlank;
+import com.tms.annotations.NullOrNotBlank;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,7 @@ public class CityDetails extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer cityId;
-	@NotBlank
+	@NullOrNotBlank(message = "Oops!!! City Name Empty")
 	String cityName;
 
 //	  public Integer getCityId() { return cityId; }
