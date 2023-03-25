@@ -1,5 +1,7 @@
 package com.tms.model;
 
+import javax.validation.constraints.NotBlank;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,7 @@ public class CityDetails extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer cityId;
+	@NotBlank
 	String cityName;
 
 //	  public Integer getCityId() { return cityId; }
