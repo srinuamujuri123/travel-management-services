@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data	//lombok used
+@Data
 @Entity
 @Table(name = "CityDetails")
 public class CityDetails extends BaseEntity {
@@ -19,16 +19,5 @@ public class CityDetails extends BaseEntity {
 	Integer cityId;
 	@NullOrNotBlank(message = "Oops!!! City Name Empty")
 	String cityName;
-
-//	  public Integer getCityId() { return cityId; }
-//	  
-//	  public void setCityId(Integer cityId) { this.cityId = cityId; }
-//	  
-//	  public String getCityName() { return cityName; }
-//	  
-//	  public void setCityName(String cityName) { this.cityName = cityName; }
-//	  
-//	  @Override public String toString() { return "CityDetails [cityId=" + cityId +
-//	  ", cityName=" + cityName + "]"; }
 
 }

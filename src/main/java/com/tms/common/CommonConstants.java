@@ -49,6 +49,7 @@ public interface CommonConstants {
 		String ERROR = "Error while saving the User";
 		String DELETED = "Deleted user Details sucessfully";
 		String UNABLETODELETE = "Oops, Unable to Delete Data";
+		String SOME_ERROR = "Oops, Some internal issue, please try after sometime!!!";
 	}
 
 	public interface City {
