@@ -16,6 +16,7 @@ public class CityDetails extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NullOrNotBlank(message = "Oops!!! City Id Empty")
 	Integer cityId;
 	@NullOrNotBlank(message = "Oops!!! City Name Empty")
 	String cityName;
