@@ -51,5 +51,4 @@ public class CityController {
 			@RequestParam(required = false) Boolean isActive) {
 		return cityService.deleteCityDetailsById(cityId, isActive);
 	}
-
 }

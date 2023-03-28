@@ -61,7 +61,7 @@ public class CityServiceImpl implements CityService {
 			if (cityDetailsByIdObj != null) {
 				response.setData(cityDetailsByIdObj);
 			} else {
-				response.setData("Oops, city not found with the Id " + cityId);
+				response.setDetails("Oops, city not found with the Id " + cityId);
 			}
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
