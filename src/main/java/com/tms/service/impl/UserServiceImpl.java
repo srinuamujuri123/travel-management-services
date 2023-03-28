@@ -9,14 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tms.common.CommonConstants.User;
+import com.tms.client.common.CommonConstants.User;
+import com.tms.client.utils.DateUtils;
+import com.tms.client.utils.TMSUtils;
 import com.tms.dao.UserDao;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserDetails;
 import com.tms.service.UserService;
-import com.tms.utils.DateUtils;
-import com.tms.utils.TMSUtils;
 
 @Service
 public class UserServiceImpl implements UserService {

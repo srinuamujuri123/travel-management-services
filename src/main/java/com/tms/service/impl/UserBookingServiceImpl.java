@@ -1,6 +1,6 @@
 package com.tms.service.impl;
 
-import static com.tms.utils.TMSUtils.ZERO;
+import static com.tms.client.utils.TMSUtils.ZERO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,16 +16,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.tms.common.CommonConstants.Hotel;
+import com.tms.client.common.CommonConstants.Hotel;
+import com.tms.client.model.HotelDetails;
+import com.tms.client.utils.DateUtils;
+import com.tms.client.utils.RestClient;
+import com.tms.client.utils.TMSUtils;
 import com.tms.dao.UserBookingDao;
-import com.tms.model.HotelDetails;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserBookingDetails;
 import com.tms.service.UserBookingService;
-import com.tms.utils.DateUtils;
-import com.tms.utils.RestClient;
-import com.tms.utils.TMSUtils;
 
 @Service
 public class UserBookingServiceImpl implements UserBookingService {

@@ -1,6 +1,6 @@
 package com.tms.model;
 
-import com.tms.annotations.NullOrNotBlank;
+import com.tms.client.annotations.NullOrNotBlank;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

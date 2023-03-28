@@ -10,15 +10,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.tms.common.CommonConstants.City;
+import com.tms.client.common.CommonConstants.City;
+import com.tms.client.utils.DateUtils;
+import com.tms.client.utils.TMSUtils;
 import com.tms.dao.CityDao;
 import com.tms.model.CityDetails;
 import com.tms.model.CityNamesView;
 import com.tms.model.TMSResponse;
 import com.tms.model.TMSResponse.Status;
 import com.tms.service.CityService;
-import com.tms.utils.DateUtils;
-import com.tms.utils.TMSUtils;
 
 @Service
 public class CityServiceImpl implements CityService {
