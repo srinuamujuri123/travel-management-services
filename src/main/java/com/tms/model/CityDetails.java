@@ -1,6 +1,7 @@
 package com.tms.model;
 
 import com.tms.client.annotations.NullOrNotBlank;
+import com.tms.client.model.BaseEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

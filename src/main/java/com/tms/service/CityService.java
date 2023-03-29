@@ -1,7 +1,7 @@
 package com.tms.service;
 
+import com.tms.client.model.TMSResponse;
 import com.tms.model.CityDetails;
-import com.tms.model.TMSResponse;
 
 public interface CityService {
 

@@ -2,6 +2,8 @@ package com.tms.model;
 
 import java.util.Date;
 
+import com.tms.client.model.BaseEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -10,11 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tms.client.common.CommonConstants.User;
+import com.tms.client.model.TMSResponse;
+import com.tms.client.model.TMSResponse.Status;
 import com.tms.client.utils.DateUtils;
 import com.tms.client.utils.TMSUtils;
 import com.tms.dao.UserDao;
-import com.tms.model.TMSResponse;
-import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserDetails;
 import com.tms.service.UserService;
 

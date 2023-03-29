@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service;
 
 import com.tms.client.common.CommonConstants.Hotel;
 import com.tms.client.model.HotelDetails;
+import com.tms.client.model.TMSResponse;
+import com.tms.client.model.TMSResponse.Status;
 import com.tms.client.utils.DateUtils;
 import com.tms.client.utils.RestClient;
 import com.tms.client.utils.TMSUtils;
 import com.tms.dao.UserBookingDao;
-import com.tms.model.TMSResponse;
-import com.tms.model.TMSResponse.Status;
 import com.tms.model.UserBookingDetails;
 import com.tms.service.UserBookingService;
 
